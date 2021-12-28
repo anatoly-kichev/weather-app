@@ -2,15 +2,18 @@ import { useState } from 'react';
 import { SearchPanel } from '../SearchPanel/SearchPanel';
 import { WeatherWidget } from '../WeatherWidget/WeatherWidget';
 import { useGetCoordinatesBySearchQuery } from '../../api/geocodingAPI';
-import { useGetWeatherByCityCoordinatesQuery } from '../../api/weatherAPI';
+import { useGetWeatherByCoordinatesQuery } from '../../api/weatherAPI';
 
 export const AppContainer = () => {
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState('Moscow');
 
   const {
     data: coordinatesData = [{
       latitude: undefined,
-      longitude: undefined
+      longitude: undefined,
+      city: undefined,
+      country: undefined,
+      timezone: undefined
     }]
   } = useGetCoordinatesBySearchQuery(inputText);
 
@@ -21,9 +24,10 @@ export const AppContainer = () => {
         weathercode: 0
       }
     }
-  } = useGetWeatherByCityCoordinatesQuery({
+  } = useGetWeatherByCoordinatesQuery({
     latitude: coordinatesData[0].latitude,
-    longitude: coordinatesData[0].longitude
+    longitude: coordinatesData[0].longitude,
+    timezone: coordinatesData[0].timezone
   });
 
   const onChangeInput = (event) => {
@@ -43,7 +47,7 @@ export const AppContainer = () => {
         onChangeInput={onChangeInput}
         onKeyPress={onKeyPress}
       />
-      <WeatherWidget weather={weatherData} />
+      <WeatherWidget weather={weatherData} city={coordinatesData[0].city} country={coordinatesData[0].country} />
     </>
   )
 }

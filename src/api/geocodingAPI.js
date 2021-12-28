@@ -8,7 +8,10 @@ export const geocodingApi = createApi({
       query: (name) => `search?name=${name}`,
       transformResponse: (response) => response.results.map(city => ({
         latitude: city.latitude,
-        longitude: city.longitude
+        longitude: city.longitude,
+        city: city.name,
+        country: city.country,
+        timezone: city.timezone.replace('/', '%2F')
       }))
     })
   }),
