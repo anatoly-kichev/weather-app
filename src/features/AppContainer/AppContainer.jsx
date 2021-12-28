@@ -3,6 +3,7 @@ import { SearchPanel } from '../SearchPanel/SearchPanel';
 import { WeatherWidget } from '../WeatherWidget/WeatherWidget';
 import { useGetCoordinatesBySearchQuery } from '../../api/geocodingAPI';
 import { useGetWeatherByCoordinatesQuery } from '../../api/weatherAPI';
+import styles from './AppContainer.module.css'
 
 export const AppContainer = () => {
   const [inputText, setInputText] = useState('Moscow');
@@ -41,13 +42,13 @@ export const AppContainer = () => {
   }
 
   return (
-    <>
+    <div className={styles.appContainer}>
       <SearchPanel
         value={inputText}
         onChangeInput={onChangeInput}
         onKeyPress={onKeyPress}
       />
       <WeatherWidget weather={weatherData} city={coordinatesData[0].city} country={coordinatesData[0].country} />
-    </>
+    </div>
   )
 }

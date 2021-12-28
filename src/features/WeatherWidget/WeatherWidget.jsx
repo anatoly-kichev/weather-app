@@ -92,15 +92,18 @@ export const WeatherWidget = ({ weather, city, country }) => {
   return (
     <div className={styles.widget}>
       <div className={styles.mainBlock}>
-        <div className={styles.cityName}>
-          {city}
+        <div className={styles.place}>
+          <span className={styles.cityName}>
+            {city}
+          </span>
+          <span className={styles.countryName}>
+            {country}
+          </span>
         </div>
-        <div className={styles.weatherIcon}>
-          <img src={`${imgSrc}`} alt="weather" />
-        </div>
+        <img className={styles.weatherIcon} src={`${imgSrc}`} alt="weather" />
         <div className={styles.currentWeather}>
           <span className={styles.currentTemperature}>
-            {weather.current_weather.temperature}&deg;C
+            {Math.round(weather.current_weather.temperature)}&#8451;
           </span>
           <span className={styles.currentInfo}>
             {weatherInfo.descr}

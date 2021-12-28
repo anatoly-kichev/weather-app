@@ -1,9 +1,14 @@
+import styles from './SearchPanel.module.css';
+
 export const SearchPanel = ({ value, onChangeInput, onKeyPress }) => {
   return (
-    <input
-      value={value}
-      onChange={onChangeInput}
-      onKeyPress={onKeyPress}
-    />
+    <div className={styles.inputWrapper}>
+      <input
+        className={styles.input}
+        value={value}
+        onChange={onChangeInput}
+        onKeyPress={onKeyPress}
+      />
+    </div>
   )
 }

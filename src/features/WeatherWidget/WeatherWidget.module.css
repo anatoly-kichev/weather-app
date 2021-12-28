@@ -1,5 +1,44 @@
+.widget {
+  box-shadow: 8px 8px 24px 4px rgba(34, 60, 80, 0.2);
+}
+
 .mainBlock {
   display: flex;
+  justify-content: space-evenly;
+  margin-top: 30px;
+}
+
+.place,
+.currentWeather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  align-items: space-between;
+  line-height: 40px;
+}
+
+.cityName,
+.countryName,
+.currentTemperature,
+.currentInfo {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.cityName,
+.currentTemperature {
+  font-weight: 600;
+}
+
+.cityName {
+  font-size: 32px;
+}
+
+.countryName,
+.currentInfo {
+  font-size: 24px;
+}
+
+.currentTemperature {
+  font-size: 40px;
 }
