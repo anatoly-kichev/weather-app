@@ -1,6 +1,7 @@
 import styles from './WeatherWidget.module.css';
+import { useGetWeatherByCoordinatesQuery } from '../../api/weatherAPI';
 
-export const WeatherWidget = ({ weather, city, country }) => {
+export const WeatherWidget = ({ coordinates }) => {
   const getWeatherInfo = (weathercode) => {
     switch (weathercode) {
       case 0:
@@ -86,31 +87,76 @@ export const WeatherWidget = ({ weather, city, country }) => {
     }
   }
 
-  const weatherInfo = getWeatherInfo(weather.current_weather.weathercode);
-  const imgSrc = 'http://openweathermap.org/img/wn/' + weatherInfo.iconCode + 'd@4x.png';
+  const getImageUrl = (iconCode, isLarge = false, isDay = true) => {
+    let url = `http://openweathermap.org/img/wn/${iconCode}`;
+
+    if (isDay) {
+      url += 'd';
+    } else {
+      url += 'n';
+    }
+
+    if (isLarge) {
+      url += '@4x';
+    }
+
+    return `${url}.png`;
+  };
+
+  const {
+    data: weather = {
+      currentTemperature: null,
+      currentWeathercode: null,
+      time: null,
+      sunrise: null,
+      sunset: null,
+      weakly: []
+    }
+  } = useGetWeatherByCoordinatesQuery({
+    latitude: coordinates.latitude,
+    longitude: coordinates.longitude,
+    timezone: coordinates.timezone
+  });
+
+  const currentWeatherInfo = getWeatherInfo(weather.currentWeathercode);
+  const isDay = weather.time - weather.sunrise < weather.sunset - weather.sunrise;
+  const imgSrc = getImageUrl(currentWeatherInfo.iconCode, true, isDay);
 
   return (
     <div className={styles.widget}>
       <div className={styles.mainBlock}>
         <div className={styles.place}>
           <span className={styles.cityName}>
-            {city}
+            {coordinates.city}
           </span>
           <span className={styles.countryName}>
-            {country}
+            {coordinates.country}
           </span>
         </div>
-        <img className={styles.weatherIcon} src={`${imgSrc}`} alt="weather" />
+        <img className={styles.weatherIcon} src={imgSrc} alt="weather" />
         <div className={styles.currentWeather}>
           <span className={styles.currentTemperature}>
-            {Math.round(weather.current_weather.temperature)}&#8451;
+            {weather.currentTemperature}&#8451;
           </span>
           <span className={styles.currentInfo}>
-            {weatherInfo.descr}
+            {currentWeatherInfo.descr}
           </span>
         </div>
       </div>
-      {console.log(weather)}
+      <div className={styles.extraBlock}>
+        {weather.weakly && weather.weakly.map(dailyWeather => (
+          <div className={styles.dailyWeather}>
+            <div className={styles.left}>
+              <span className={styles.day}>{dailyWeather.day}</span>
+              <img src={getImageUrl(getWeatherInfo(dailyWeather.weathercode).iconCode)} alt="weather" />
+            </div>
+            <div className={styles.right}>
+              <span className={styles.temperatureMax}>{dailyWeather.temperatureMax}&#8451;</span>
+              <span className={styles.temperatureMin}>{dailyWeather.temperatureMin}&#8451;</span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

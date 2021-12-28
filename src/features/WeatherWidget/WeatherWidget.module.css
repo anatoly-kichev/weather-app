@@ -9,6 +9,12 @@
 }
 
 .place,
+.weatherIcon,
+.currentWeather {
+  width: 200px;
+}
+
+.place,
 .currentWeather {
   display: flex;
   flex-direction: column;
@@ -23,6 +29,7 @@
 .currentInfo {
   text-transform: uppercase;
   font-weight: 500;
+  text-align: center;
 }
 
 .cityName,
@@ -39,6 +46,44 @@
   font-size: 24px;
 }
 
+.countryName {
+  line-height: 28px;
+}
+
 .currentTemperature {
   font-size: 40px;
+}
+
+.extraBlock {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.dailyWeather {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.left,
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.left {
+  margin-right: 5px;
+}
+
+.temperatureMax {
+  color: #ec6c4c;
+}
+
+.temperatureMin {
+  color: #2596be
 }
