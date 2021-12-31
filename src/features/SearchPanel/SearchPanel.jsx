@@ -8,7 +8,7 @@ export const SearchPanel = ({ value, onChangeInput, onKeyPress }) => {
         value={value}
         onChange={onChangeInput}
         onKeyPress={onKeyPress}
-        placeholder="Search..."
+        placeholder="Enter the name of the city..."
       />
     </div>
   )
